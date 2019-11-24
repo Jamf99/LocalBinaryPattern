@@ -1,7 +1,7 @@
 import cv2
 import numpy as np
 from matplotlib import pyplot as plt
-
+import timeit
 from skimage import feature
 
 class LBP:
@@ -16,15 +16,25 @@ class LBP:
 	def execute(self):
 		img_lbp = np.zeros((self.height, self.width, 3), np.uint8)
 
+		#  ===== Start counting time in microseconds =====
+
+		start = timeit.default_timer()
+
 		# Taking advantage of the spatial locality
 		for line in range(self.height):
 			for column in range(self.width):
 		 		img_lbp[line, column] = self._calculateLBP(self.image, column, line)
 
 		# Without taking advantage of the spatial locatity
-		# for line in range(self.height):
-		#	for column in range(self.width):
+		# for column in range(self.width):
+		#	for line in range(self.height):
 	    #		img_lbp[line, column] = self._calculateLBP(self.image, column, line)
+
+		stop = timeit.default_timer()
+
+		#  ===== End counting time in microseconds =====
+
+		print("Time: {} seconds".format(stop - start))
 
 		self._histogram(self.image, self.transformed_img, "Result from algorithm developed")
 		self._displayImages(self.transformed_img, "Result from algorithm developed")
