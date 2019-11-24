@@ -3,4 +3,3 @@
 Integrantes: 
 
 - Jorge Antonio Morales
-- Steven Bernal
