@@ -8,7 +8,7 @@ class LBP:
 	def __init__(self, input):
 		self.image = cv2.imread(input, 0)
 
-		self.transformed_img = cv2.imread(input, 0)
+		# self.transformed_img = cv2.imread(input, 0)
 
 		self.height = len(self.image)
 		self.width = len(self.image[0])
@@ -21,14 +21,14 @@ class LBP:
 		start = timeit.default_timer()
 
 		# Taking advantage of the spatial locality
-		for line in range(self.height):
-			for column in range(self.width):
-		 		img_lbp[line, column] = self._calculateLBP(self.image, column, line)
+		#for line in range(self.height):
+		#	for column in range(self.width):
+		# 		img_lbp[line, column] = self._calculateLBP(self.image, column, line)
 
 		# Without taking advantage of the spatial locatity
-		# for column in range(self.width):
-		#	for line in range(self.height):
-	    #		img_lbp[line, column] = self._calculateLBP(self.image, column, line)
+		for column in range(self.width):
+			for line in range(self.height):
+	   			img_lbp[line, column] = self._calculateLBP(self.image, column, line)
 
 		stop = timeit.default_timer()
 
@@ -36,8 +36,8 @@ class LBP:
 
 		print("Time: {} seconds".format(stop - start))
 
-		self._histogram(self.image, self.transformed_img, "Result from algorithm developed")
-		self._displayImages(self.transformed_img, "Result from algorithm developed")
+		#self._histogram(self.image, img_lbp, "Result from algorithm developed")
+		#self._displayImages(img_lbp, "Result from algorithm developed")
 
 	def _displayImages(self, transformed_img, title):
 		plt.figure()
@@ -47,13 +47,13 @@ class LBP:
 		plt.show()
 
 	def _calculateLBP(self, pixel, column, line):
-		values = self._thresholded(pixel[line,column], self._get_positions_8_1(pixel, column, line))
-		weights_8 = [1, 2, 4, 8, 16, 32, 64, 128]
-		# weights_16 = [1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 2048, 4096, 8192, 16384, 32768]
+		values = self._thresholded(pixel[line,column], self._get_positions_16_2(pixel, column, line))
+		# weights_8 = [1, 2, 4, 8, 16, 32, 64, 128]
+		weights_16 = [1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 2048, 4096, 8192, 16384, 32768]
 		lbp = 0
 		for i in range(0, len(values)):
-			lbp += values[i]*weights_8[i]
-		self.transformed_img.itemset((line,column), lbp)
+			lbp += values[i]*weights_16[i]
+		#	self.transformed_img.itemset((line,column), lbp)
 		return lbp
 
 	# Obtain pixel positions with radius 1 and 8 neighbors

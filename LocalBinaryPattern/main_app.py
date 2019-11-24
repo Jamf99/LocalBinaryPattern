@@ -4,7 +4,7 @@ import LBP
 
 def main():
 
-	input_file = 'images/prueba.bmp'
+	input_file = 'images/Neutral-veryBig.jpg'
 
 	if os.path.isfile(input_file):
 		run = LBP.LBP(input_file)
