@@ -8,10 +8,8 @@ def main():
 
 	if os.path.isfile(input_file):
 		run = LBP.LBP(input_file)
-		print("RUNNING algorithm developed")
+		print("RUNNING . . .")
 		run.execute()
-		#print("RUNNING scikit-image")
-		#run.compare()
 	else:
 	    print("File '{}' does not exist.".format(input_file))
 
